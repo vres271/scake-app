@@ -11,5 +11,5 @@ node app.js
 ### Получить пользователей
 http://localhost:4202/api/v1/users/
 
-### Получить пользователя с id = 123
-http://localhost:4202/api/v1/users/123
+### Получить пользователя с id = 4
+http://localhost:4202/api/v1/users/4
