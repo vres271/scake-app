@@ -16,20 +16,23 @@ app.get('/', (req, res) => {
 })
 // users
 
-const users = [
-  {id: 1, name: 'Jhon', age: 29},
-  {id: 2, name: 'Mary', age: 19},
-  {id: 3, name: 'Greg', age: 21},
-  {id: 4, name: 'Ivan', age: 29},
-  {id: 7, name: 'Gary', age: 12},
-  {id: 8, name: 'Tony', age: 23},
-  {id: 12, name: 'Den', age: 29},
-  {id: 14, name: 'Denis', age: 16},
-  {id: 15, name: 'Fuck', age: 11},
-  {id: 16, name: 'Margh', age: 62},
-  {id: 21, name: 'Kristofer', age: 29},
-  {id: 22, name: 'Ron', age: 72},
-]
+const fs = require('fs');
+const users = JSON.parse(fs.readFileSync('data/users.json', 'utf8'));
+
+// const users = [
+//   {id: 1, name: 'Jhon', age: 29},
+//   {id: 2, name: 'Mary', age: 19},
+//   {id: 3, name: 'Greg', age: 21},
+//   {id: 4, name: 'Ivan', age: 29},
+//   {id: 7, name: 'Gary', age: 12},
+//   {id: 8, name: 'Tony', age: 23},
+//   {id: 12, name: 'Den', age: 29},
+//   {id: 14, name: 'Denis', age: 16},
+//   {id: 15, name: 'Fuck', age: 11},
+//   {id: 16, name: 'Margh', age: 62},
+//   {id: 21, name: 'Kristofer', age: 29},
+//   {id: 22, name: 'Ron', age: 72},
+// ]
 
 app.get(routePrefix + '/users', (req, res) => {
   res.send(users)
