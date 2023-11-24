@@ -19,23 +19,27 @@ app.get('/', (req, res) => {
 const fs = require('fs');
 const users = JSON.parse(fs.readFileSync('data/users.json', 'utf8'));
 
-// const users = [
-//   {id: 1, name: 'Jhon', age: 29},
-//   {id: 2, name: 'Mary', age: 19},
-//   {id: 3, name: 'Greg', age: 21},
-//   {id: 4, name: 'Ivan', age: 29},
-//   {id: 7, name: 'Gary', age: 12},
-//   {id: 8, name: 'Tony', age: 23},
-//   {id: 12, name: 'Den', age: 29},
-//   {id: 14, name: 'Denis', age: 16},
-//   {id: 15, name: 'Fuck', age: 11},
-//   {id: 16, name: 'Margh', age: 62},
-//   {id: 21, name: 'Kristofer', age: 29},
-//   {id: 22, name: 'Ron', age: 72},
-// ]
-
 app.get(routePrefix + '/users', (req, res) => {
-  res.send(users)
+  let items = [...users];
+  if(req?.query && Object.entries(req?.query).length > 0) {
+    items = items.filter(item => {
+      const every = Object.entries(req?.query).every(([key, value] = entry) => {
+        if (key !== 'offset' && key !== 'limit') {
+          regexp = new RegExp(value, 'ig');
+          return regexp.test(item[key])
+        }
+        return true;
+      })
+      return every;
+    });
+  }
+  if(req?.query?.offset) {
+    items = items.slice(req?.query?.offset);
+  }
+  if(req?.query?.limit) {
+    items = items.slice(0, req?.query?.limit);
+  }
+  res.send(items)
 })
 
 app.get(routePrefix + '/users/:id', (req, res) => {
